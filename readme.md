@@ -24,12 +24,12 @@ Floor Plan Storage Manager
  - replaceFlag : if file already exists, would user like to replace it?
 
 **Components used in the project:**
-•	Spring boot (Back-end framework)
-•	JPA (Database access)
-•	AWS S3 (Regular for now) //TODO -> use RRS for thumbnails and large pngs, also use –––––––rules
-•	AWS RDS (MySQL)
-•	AWS Elastic Beanstalk (EC2, Load Balancer and Auto Scaling groups) to host SpringBoot application
-•	Secret-key authentication (additional security while making api calls)
+    - Spring boot (Back-end framework)
+    - JPA (Database access)
+    - AWS S3 (Regular for now) //TODO -> use RRS for thumbnails and large pngs, also use –––––––rules
+    - AWS RDS (MySQL)
+    - AWS Elastic Beanstalk (EC2, Load Balancer and Auto Scaling groups) to host SpringBoot application
+    - Secret-key authentication (additional security while making api calls)
 
 **Database schema:**
 1.	Projects table
@@ -40,10 +40,10 @@ Id	Project Id	Display Name 	File Type	File Name(with extension)
 
 
 **Edge cases handled in the back-end:**
--> Project exists before file upload
--> File already exists and if yes, user would like to replace it?
--> File type is .pdf or .jpg
--> do not add new record to database while replacing the file on S3
+- Project exists before file upload
+- File already exists and if yes, user would like to replace it?
+- File type is .pdf or .jpg
+- do not add new record to database while replacing the file on S3
 
 **Examples of API calls using (Postman)**
 1.	Get projects

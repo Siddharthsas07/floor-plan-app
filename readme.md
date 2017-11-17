@@ -14,7 +14,7 @@ Floor Plan Storage Manager
 > POST method (form-data)
 > /floorplans/upload
 > body example:
- 
+ ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/1.png)
 > Parameters:
  - file : file to be attached
  - id : project id, fetched from the UI
@@ -24,12 +24,12 @@ Floor Plan Storage Manager
  - replaceFlag : if file already exists, would user like to replace it?
 
 **Components used in the project:**
-    - Spring boot (Back-end framework)
-    - JPA (Database access)
-    - AWS S3 (Regular for now) //TODO -> use RRS for thumbnails and large pngs, also use –––––––rules
-    - AWS RDS (MySQL)
-    - AWS Elastic Beanstalk (EC2, Load Balancer and Auto Scaling groups) to host SpringBoot application
-    - Secret-key authentication (additional security while making api calls)
+- Spring boot (Back-end framework)
+- JPA (Database access)
+- AWS S3 (Regular for now) //TODO -> use RRS for thumbnails and large pngs, also use –––––––rules
+- AWS RDS (MySQL)
+- AWS Elastic Beanstalk (EC2, Load Balancer and Auto Scaling groups) to host SpringBoot application
+- Secret-key authentication (additional security while making api calls)
 
 **Database schema:**
 1.	Projects table (Project Id,	Project Name)
@@ -45,33 +45,41 @@ Floor Plan Storage Manager
 
 **Examples of API calls using (Postman)**
 1.	Get projects
- 
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/2.png)
 2.	Create project
 -> Create Project
- 
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/3.png)
 
 -> Project already exist
- 
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/4.png)
+
 
 3.	Upload floor plans to a project
 -> Upload a file
- 
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/5.png)
+
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/6.png)
 
  
 -> Try uploading same file with replaceFlag false
- 
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/7.png)
+
 
 -> Try uploading same file with replaceFlag true
  
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/8.png)
 
- 
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/9.png)
+
 
 -> Try to upload a file on non-existing Project by manipulating params from Front-end (here postman)
- 
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/10.png)
+
 
 **Database**
 Database connection to AWS RDS (to use locally):
- 
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/11.png)
+
 
 Create table script is stored within resources folder with name InitialScript.sql
 
@@ -82,11 +90,15 @@ Create table script is stored within resources folder with name InitialScript.sq
 Reference -> https://aws.amazon.com/blogs/devops/deploying-a-spring-boot-application-on-aws-using-aws-elastic-beanstalk/
 
 Auto Scalling:
- 
- 
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/12.png)
+
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/13.png)
+
 
 Load Balancing:
-  
+    ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/14.png)
+
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/15.png)
 
  
 

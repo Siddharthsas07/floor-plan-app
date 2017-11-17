@@ -90,15 +90,15 @@ Create table script is stored within resources folder with name InitialScript.sq
 Reference -> https://aws.amazon.com/blogs/devops/deploying-a-spring-boot-application-on-aws-using-aws-elastic-beanstalk/
 
 Auto Scalling:
-   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/12.png)
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/12.jpg)
 
-   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/13.png)
+   ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/13.jpg)
 
 
 Load Balancing:
-    ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/14.png)
+    ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/15.jpg)
 
-  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/15.png)
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/16.jpg)
 
  
 

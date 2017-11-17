@@ -32,11 +32,9 @@ Floor Plan Storage Manager
     - Secret-key authentication (additional security while making api calls)
 
 **Database schema:**
-1.	Projects table
-Project Id	Project Name
+1.	Projects table (Project Id,	Project Name)
 
-2.	Floor Plans table
-Id	Project Id	Display Name 	File Type	File Name(with extension)
+2.	Floor Plans table (Id, Project Id, Display Name, File Type, File Name(with extension))
 
 
 **Edge cases handled in the back-end:**

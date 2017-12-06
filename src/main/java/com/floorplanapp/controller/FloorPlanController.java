@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.floorplanapp.config.GlobalProperties;
+import com.floorplanapp.domain.FloorPlans;
 import com.floorplanapp.domain.Projects;
+import com.floorplanapp.domain.UploadModel;
 import com.floorplanapp.dto.ResponseDTO;
 import com.floorplanapp.dto.FloorPlanDTO;
 import com.floorplanapp.exceptions.UnauthorizedAccessException;
@@ -66,7 +69,7 @@ public class FloorPlanController {
 	public ResponseEntity<?> uploadProjectData(@RequestHeader(value = "secret-key") String secretKey,
 			@RequestParam("id") String id, @RequestParam("projectName") String projectName,
 			@RequestParam("displayName") String displayName, @RequestParam("fileType") String fileType,
-			@RequestParam("replaceFlag") String replaceFlag, @RequestParam("file") MultipartFile[] uploadfiles)
+			@RequestParam("replaceFlag") String replaceFlag, @ModelAttribute UploadModel uploadfiles)
 			throws Exception {
 
 		boolean valid = validate(secretKey);
@@ -75,7 +78,7 @@ public class FloorPlanController {
 		if (valid) {
 			log.info("Client request :: upload data ");
 			floorPlans = new FloorPlanDTO(Long.parseLong(id), projectName, displayName, fileType,
-					Boolean.parseBoolean(replaceFlag), uploadfiles[0].getBytes());
+					Boolean.parseBoolean(replaceFlag), uploadfiles.getFiles()[0].getBytes());
 			ResponseDTO error = service.uploadFile(floorPlans);
 			if (error == null) {
 				return new ResponseEntity<>(new ResponseDTO("Success", "File added successfully"), HttpStatus.OK);
@@ -118,6 +121,22 @@ public class FloorPlanController {
 			log.info("TODO");
 			List<Projects> projects = service.getProjects();
 			return new ResponseEntity<>(projects, HttpStatus.OK);
+		} else {
+			throw new UnauthorizedAccessException();
+		}
+
+	}
+	
+	@CrossOrigin
+	@RequestMapping(method = RequestMethod.GET, value = "/floorplans", headers = { "Accept=application/json" })
+
+	public ResponseEntity<?> getFloorPlans(@RequestHeader(value = "secret-key") String secretKey, 
+			@RequestParam("projectId") String projectId) throws ParseException {
+		boolean valid = validate(secretKey);
+		if (valid) {
+			log.info("TODO");
+			List<FloorPlans> floorPlans = service.getFloorPlansOfProject(Long.valueOf(projectId));
+			return new ResponseEntity<>(floorPlans, HttpStatus.OK);
 		} else {
 			throw new UnauthorizedAccessException();
 		}

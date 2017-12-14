@@ -103,40 +103,48 @@ Load Balancing:
  
 
 **Added Fucntionalities:**
-
+=======================================
 **1. Store versions **
     - Now it stores version of the files into S3 when uploaded with same name.
-    - Case 1 : No previous file exists
-    
-    **Before adding file**
-    
-  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/22.JPG)
+
+Case 1 : No previous file exists
+=======================================
+**Before adding file**
+![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/22.JPG)
     
         
-    **After adding file**
+**After adding file**
 ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/23.JPG)
-       
-    **On S3 :**
- ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/24.JPG)
-    
-    - Case 2 : version exists
-    
-   **After adding new version**
-    ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/25.JPG)
+
+
+**On S3 :**
+![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/24.JPG)
+
+
+Case 2 : version exists
+=============================
+
+**After adding new version**
+![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/25.JPG)
    
     
-    **After adding new version on S3**
+**After adding new version on S3**
 ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/26.JPG)
-    
-    **- Also creates thumbnail and large png for new file by overriding existing one**
- ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/20.JPG)
+ 
+ 
+**- Also creates thumbnail and large png for new file by overriding existing one**
+![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/20.JPG)
     
   
   
-**2. Display versions (Get Versions) - get version for given project and file, if exists**
-  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/18.JPG)
+Display versions (Get Versions) - get version for given project and file, if exists
+=======================================
+![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/18.JPG)
 
-  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/27.JPG)
+![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/27.JPG)
 
-**3. Delete versions - delete particular version**
-  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/17.JPG)
+
+Delete versions - delete particular version
+=======================================
+
+![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/17.JPG)

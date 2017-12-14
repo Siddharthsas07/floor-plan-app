@@ -23,6 +23,16 @@ public class FloorPlanDTO {
 		this.bytes = bytes;
 	}
 	
+	public FloorPlanDTO(FloorPlanDTO object) {
+		super();
+		this.id = object.getId();
+		this.projectName = object.getProjectName();
+		this.displayName = object.getDisplayName();
+		this.fileType = object.getFileType();
+		this.replaceFlag = true;
+		this.bytes = object.getBytes();
+	}
+	
 	public Long getId() {
 		return id;
 	}

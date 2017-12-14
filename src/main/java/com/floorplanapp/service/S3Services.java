@@ -27,6 +27,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GetObjectRequest;
@@ -35,13 +37,16 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.floorplanapp.config.AWSConfiguration;
 import com.floorplanapp.config.GlobalProperties;
 import com.floorplanapp.domain.FloorPlans;
 import com.floorplanapp.domain.Projects;
+import com.floorplanapp.domain.Versions;
 import com.floorplanapp.dto.ResponseDTO;
 import com.floorplanapp.dto.FloorPlanDTO;
 import com.floorplanapp.repository.FloorPlanRepository;
 import com.floorplanapp.repository.ProjectsRepository;
+import com.floorplanapp.repository.VersionsRepository;
 import com.sun.pdfview.PDFFile;
 import com.sun.pdfview.PDFPage;
 import com.sun.pdfview.PDFRenderer;
@@ -53,6 +58,9 @@ public class S3Services {
 	private GlobalProperties global;
 
 	@Autowired
+	private AWSConfiguration awsConfiguration;
+	
+	@Autowired
 	private AmazonS3Client amazonS3Client;
 
 	@Autowired
@@ -61,6 +69,9 @@ public class S3Services {
 	@Autowired
 	private FloorPlanRepository floorPlanRepository;
 
+	@Autowired
+	private VersionsRepository versionsRepository;
+	
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
 
@@ -73,6 +84,18 @@ public class S3Services {
 		return putObjectResult;
 	}
 
+	private InputStream getObject (String downloadKey) {
+		AmazonS3 s3Client = awsConfiguration.amazonS3Client(awsConfiguration.basicAWSCredentials());
+		S3Object object = s3Client.getObject(
+		                  new GetObjectRequest(bucket, downloadKey));
+		InputStream objectData = object.getObjectContent();
+		
+//		S3Object s3object = s3.getObject(new GetObjectRequest(bucket, downloadKey));
+//				InputStream stream = s3object.getObjectContent();
+		
+		return objectData;
+	}
+	
 	private boolean checkFloorPlanExists(Long id, String fileName) {
 		
 		FloorPlans floorPlan = floorPlanRepository.findByProjectIdAndFileName(id, fileName);
@@ -88,6 +111,25 @@ public class S3Services {
 		
 		if (!checkProjectByID(floorPlans.getId())) {
 			return new ResponseDTO("Error", "Project " + floorPlans.getDisplayName() + " does not exists");
+		}
+		FloorPlans fp = getFloorPlan(floorPlans.getDisplayName()+'.'+floorPlans.getFileType(), floorPlans.getId());
+		if (fp != null) {
+			Versions v = getLatestVersion(fp.getIndex());
+			if (v == null) {
+				v = new Versions(fp.getIndex(), 1L);
+			} else {
+				v = new Versions(fp.getIndex(), v.getV_number()+1);
+			}
+
+			String newFileName = fp.getDisplayName()+"_" + (v.getV_number()) + "." + fp.getType();
+			v.setFile_name(newFileName);
+			versionsRepository.save(v);
+			fp.setFileName(newFileName);
+			String fileName = floorPlans.getDisplayName() + "." + floorPlans.getFileType();
+			String old_path = floorPlans.getProjectName() + "/" + fileName;
+			InputStream input = getObject(old_path);
+			String path = floorPlans.getProjectName() + "/" + fp.getFileName();
+			upload(input, path);
 		}
 		
 		String fileName = floorPlans.getDisplayName() + "." + floorPlans.getFileType();
@@ -123,6 +165,15 @@ public class S3Services {
 			return new ResponseDTO("Error", "File already exists");
 		}
 		return new ResponseDTO("Error", "Internal Server Error");
+	}
+
+	private Versions getLatestVersion(Long versionId) {
+		return versionsRepository.findByVersionId(versionId);
+	}
+
+	private FloorPlans getFloorPlan(String string, Long id) {
+		FloorPlans fp = floorPlanRepository.findByProjectIdAndFileName(id, string);
+		return fp;
 	}
 
 	private boolean checkProjectByID(Long id) {
@@ -221,6 +272,12 @@ public class S3Services {
 		InputStream is = new ByteArrayInputStream(buffer);
 		upload(is, name);
 
+	}
+	
+	public List<Versions> getVersions(Long versionId) {
+		
+		List<Versions> versions = versionsRepository.findByVersion(versionId);
+		return versions;
 	}
 
 }

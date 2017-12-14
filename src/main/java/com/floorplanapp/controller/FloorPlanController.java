@@ -23,6 +23,7 @@ import com.floorplanapp.config.GlobalProperties;
 import com.floorplanapp.domain.FloorPlans;
 import com.floorplanapp.domain.Projects;
 import com.floorplanapp.domain.UploadModel;
+import com.floorplanapp.domain.Versions;
 import com.floorplanapp.dto.ResponseDTO;
 import com.floorplanapp.dto.FloorPlanDTO;
 import com.floorplanapp.exceptions.UnauthorizedAccessException;
@@ -69,8 +70,8 @@ public class FloorPlanController {
 	public ResponseEntity<?> uploadProjectData(@RequestHeader(value = "secret-key") String secretKey,
 			@RequestParam("id") String id, @RequestParam("projectName") String projectName,
 			@RequestParam("displayName") String displayName, @RequestParam("fileType") String fileType,
-			@RequestParam("replaceFlag") String replaceFlag, @ModelAttribute UploadModel uploadfiles)
-			throws Exception {
+			@RequestParam("replaceFlag") String replaceFlag, @RequestParam("file") MultipartFile file)			
+					throws Exception {
 
 		boolean valid = validate(secretKey);
 
@@ -78,7 +79,7 @@ public class FloorPlanController {
 		if (valid) {
 			log.info("Client request :: upload data ");
 			floorPlans = new FloorPlanDTO(Long.parseLong(id), projectName, displayName, fileType,
-					Boolean.parseBoolean(replaceFlag), uploadfiles.getFiles()[0].getBytes());
+					Boolean.parseBoolean(replaceFlag), file.getBytes());
 			ResponseDTO error = service.uploadFile(floorPlans);
 			if (error == null) {
 				return new ResponseEntity<>(new ResponseDTO("Success", "File added successfully"), HttpStatus.OK);
@@ -137,6 +138,25 @@ public class FloorPlanController {
 			log.info("TODO");
 			List<FloorPlans> floorPlans = service.getFloorPlansOfProject(Long.valueOf(projectId));
 			return new ResponseEntity<>(floorPlans, HttpStatus.OK);
+		} else {
+			throw new UnauthorizedAccessException();
+		}
+
+	}
+	
+	@CrossOrigin
+	@RequestMapping(method = RequestMethod.GET, value = "/floorHistory", headers = { "Accept=application/json" })
+
+	public ResponseEntity<?> getFloorPlanHistory(@RequestHeader(value = "secret-key") String secretKey, 
+			@RequestParam("id") String id, @RequestParam("projectId") String projectId, 
+			@RequestParam("displayName") String displayName, @RequestParam("type") String type, 
+			@RequestParam("fileName") String fileName) throws ParseException {
+		boolean valid = validate(secretKey);
+		if (valid) {
+			log.info("TODO");
+			Long vId = Long.parseLong(id);
+			List<Versions> versions = service.getVersions(vId);
+			return new ResponseEntity<>(versions, HttpStatus.OK);
 		} else {
 			throw new UnauthorizedAccessException();
 		}

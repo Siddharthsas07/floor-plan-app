@@ -102,4 +102,28 @@ Load Balancing:
 
  
 
+Added Fucntionalities:
 
+1. Store versions 
+    - Now it stores version of the files into S3 when uploaded with same name.
+    - Case 1 : No previous file exists
+        ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/22.jpg)
+        ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/23.jpg)
+        ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/24.jpg)
+    
+    - Case 2 : version exists
+    
+    ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/25.jpg)
+    ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/26.jpg)
+    
+    - Also creates thumbnail and large png for new file by overriding existing one
+    ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/20.jpg)
+    
+  
+  
+2. Display versions (Get Versions) - get version for given project and file, if exists
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/18.jpg)
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/27.jpg)
+
+3. Delete versions - delete particular version
+  ![alt text](https://github.com/Siddharthsas07/floor-plan-app/blob/master/demoPics/17.jpg)
